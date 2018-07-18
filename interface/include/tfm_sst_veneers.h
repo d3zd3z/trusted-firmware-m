@@ -31,6 +31,9 @@ extern "C" {
 enum psa_sst_err_t tfm_sst_veneer_create(uint32_t app_id, uint32_t asset_uuid,
                                          const struct tfm_sst_token_t *s_token);
 
+enum psa_sst_err_t tfm_veneer_jwt_sign(uint32_t app_id, uint32_t asset_uuid,
+                                         const struct tfm_sst_token_t *s_token);
+
 /**
  * \brief Gets asset's information referenced by asset UUID.
  *

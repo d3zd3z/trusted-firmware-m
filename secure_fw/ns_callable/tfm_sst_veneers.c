@@ -75,3 +75,11 @@ enum psa_sst_err_t tfm_sst_veneer_delete(uint32_t app_id, uint32_t asset_uuid,
     TFM_CORE_SFN_REQUEST(TFM_SP_STORAGE_ID, sst_am_delete, app_id,
                          asset_uuid, s_token, 0);
 }
+
+__tfm_secure_gateway_attributes__
+enum psa_sst_err_t tfm_veneer_jwt_sign(uint32_t app_id, uint32_t asset_uuid,
+                                         const struct tfm_sst_token_t *s_token)
+{
+    TFM_CORE_SFN_REQUEST(TFM_SP_STORAGE_ID, jwt_sign,
+                         app_id, asset_uuid, s_token, 0);
+}
