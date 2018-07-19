@@ -77,9 +77,12 @@ enum psa_sst_err_t tfm_sst_veneer_delete(uint32_t app_id, uint32_t asset_uuid,
 }
 
 __tfm_secure_gateway_attributes__
-enum psa_sst_err_t tfm_veneer_jwt_sign(uint32_t app_id, uint32_t asset_uuid,
-                                         const struct tfm_sst_token_t *s_token)
+enum psa_sst_err_t tfm_veneer_jwt_sign(uint32_t app_id,
+                                        uint32_t asset_uuid,
+                                        const struct tfm_sst_token_t *s_token
+//                                       , struct tfm_sst_jwt_t *data
+                                        )
 {
-    TFM_CORE_SFN_REQUEST(TFM_SP_STORAGE_ID, jwt_sign,
+    TFM_CORE_SFN_REQUEST(TFM_SP_STORAGE_ID, sst_jwt_sign,
                          app_id, asset_uuid, s_token, 0);
 }

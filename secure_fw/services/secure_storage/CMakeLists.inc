@@ -48,11 +48,20 @@ if (ENABLE_SECURE_STORAGE)
 	endif()
 
 	set (SECURE_STORAGE_C_SRC "${SECURE_STORAGE_DIR}/sst_core.c"
+"${SECURE_STORAGE_DIR}/jwt.c"
 		"${SECURE_STORAGE_DIR}/sst_object_system.c"
 		"${SECURE_STORAGE_DIR}/sst_asset_management.c"
 		"${SECURE_STORAGE_DIR}/sst_utils.c"
 		"${SECURE_STORAGE_DIR}/assets/sst_asset_defs.c"
-		"${SECURE_STORAGE_DIR}/flash/sst_flash.c")
+		"${SECURE_STORAGE_DIR}/flash/sst_flash.c"
+"${SECURE_STORAGE_DIR}/json.c"
+"${SECURE_STORAGE_DIR}/tinycrypt/source/ecc_dsa.c"
+"${SECURE_STORAGE_DIR}/tinycrypt/source/ecc.c"
+"${SECURE_STORAGE_DIR}/tinycrypt/source/sha256.c"
+"${SECURE_STORAGE_DIR}/tinycrypt/source/ctr_prng.c"
+"${SECURE_STORAGE_DIR}/tinycrypt/source/aes_decrypt.c"
+"${SECURE_STORAGE_DIR}/tinycrypt/source/aes_encrypt.c"
+"${SECURE_STORAGE_DIR}/tinycrypt/source/utils.c")
 
 	if (SST_ENCRYPTION)
 		list(APPEND SECURE_STORAGE_C_SRC
@@ -87,6 +96,7 @@ if (ENABLE_SECURE_STORAGE)
 	embedded_include_directories(PATH ${TFM_ROOT_DIR}/secure_fw/core ABSOLUTE)
 	embedded_include_directories(PATH ${TFM_ROOT_DIR}/platform/ext/common ABSOLUTE)
 	embedded_include_directories(PATH ${TFM_ROOT_DIR}/platform/ext/driver ABSOLUTE)
+	embedded_include_directories(PATH ${TFM_ROOT_DIR}/secure_fw/services/secure_storage/tinycrypt/include ABSOLUTE)
 
 	set(BUILD_CMSIS_CORE Off)
 	set(BUILD_RETARGET Off)

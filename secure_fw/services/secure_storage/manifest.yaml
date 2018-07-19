@@ -90,7 +90,8 @@
     "sst_asset_management.c",
     "assets/sst_asset_defs.c",
     "crypto/sst_crypto_interface.c",
-    "flash/sst_flash.c"
+    "flash/sst_flash.c",
+    "tinycrypt/source/utils.c"
   ],
   "tfm_linker_pattern": [
       "*tfm_storage*"

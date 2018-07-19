@@ -46,6 +46,16 @@ struct tfm_sst_buf_t {
     uint32_t offset; /*!< Offset within asset */
 };
 
+struct tfm_sst_jwt_t {
+    char *buffer;        /* Buffer to write result, in NS memory. */
+    uint32_t out_size;  /* Function will write bytes used here. */
+    uint32_t buffer_size;/* Available bytes in the buffer. */
+    int32_t iat;         /* The current time. */
+    int32_t exp;         /* The expiration time. */
+    char *aud;     /* A string that is part of the token (audience) */
+    uint32_t aud_len;    /* Length of audience string. */
+};
+
 #ifdef __cplusplus
 }
 #endif

@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include "platform/include/tfm_spm_hal.h"
 #include "secure_fw/spm/spm_api.h"
-
+#include "jwt.h"
 
 #include "assets/sst_asset_defs.h"
 #include "sst_object_system.h"
@@ -397,12 +397,14 @@ enum psa_sst_err_t sst_am_create(uint32_t app_id, uint32_t asset_uuid,
     return err;
 }
 
-enum psa_sst_err_t sst_jwt_sign(uint32_t app_id, uint32_t asset_uuid,
-                                 const struct tfm_sst_token_t *s_token)
+enum psa_sst_err_t sst_jwt_sign(uint32_t app_id, uint32_t asset_uuid,    
+                                const struct tfm_sst_token_t *s_token,
+                               struct tfm_sst_jwt_t *data)
 {
     enum psa_sst_err_t err = PSA_SST_ERR_SUCCESS;
-
-    LOG_MSG("jwt_sign called, app = ");
+    struct jwt_builder builder;
+    jwt_sign(&builder,data->aud, data->aud_len);
+    LOG_MSG("sst_jwt_sign called, app = ");
     return err;
 }
 enum psa_sst_err_t sst_am_read(uint32_t app_id, uint32_t asset_uuid,
