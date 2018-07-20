@@ -508,24 +508,27 @@ enum psa_sst_err_t sst_jwt_sign(uint32_t app_id, uint32_t asset_uuid,
                                struct tfm_sst_jwt_t *data)
 {
     enum psa_sst_err_t err = PSA_SST_ERR_SUCCESS;
-
-	char buf[460];
 	struct jwt_builder build;
 
     printf("fun %s() from secure \r\n", __func__);
     printf("Param Buffer %s, Size %x\r\n", data->buffer, data->buffer_size);
-	int res = jwt_init_builder(&build, buf, sizeof(buf));
-//	zassert_equal(res, 0, "Setting up jwt");
 
-	res = jwt_add_payload(&build, 1530312026, 1530308426, "iot-work-199419");
-//	zassert_equal(res, 0, "Adding payload");
+	int res = jwt_init_builder(&build, data->buffer, data->buffer_size);
+    if(res == 0) {
+        res = jwt_add_payload(&build, data->exp, data->iat, data->aud);
+    } else {
+        err = PSA_SST_ERR_PARAM_ERROR;
+    }
 
-	res = jwt_sign(&build, jwt_test_private_der, jwt_test_private_der_len);
-//	zassert_equal(res, 0, "Signing payload");
+    if(res == 0) {
+        res = jwt_sign(&build, jwt_test_private_der, jwt_test_private_der_len);
+    } else {
+        err = PSA_SST_ERR_PARAM_ERROR;
+    }
 
-//	zassert_equal(build.overflowed, false, "Not overflow");
-
-    #endif
+    if(build.overflowed) {
+        err = PSA_SST_ERR_SYSTEM_ERROR;
+    }
 
     return err;
 }
