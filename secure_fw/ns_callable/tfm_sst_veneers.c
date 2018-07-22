@@ -86,3 +86,14 @@ enum psa_sst_err_t tfm_veneer_jwt_sign(uint32_t app_id,
     TFM_CORE_SFN_REQUEST(TFM_SP_STORAGE_ID, sst_jwt_sign,
                          app_id, asset_uuid, s_token, data);
 }
+
+__tfm_secure_gateway_attributes__
+enum psa_sst_err_t tfm_veneer_jwt_get_address(uint32_t app_id,
+                                        uint32_t asset_uuid,
+                                        const struct tfm_sst_token_t *s_token
+                                       , const unsigned char **address
+                                        )
+{
+    TFM_CORE_SFN_REQUEST(TFM_SP_STORAGE_ID, sst_jwt_get_address,
+                         app_id, asset_uuid, s_token, address);
+}

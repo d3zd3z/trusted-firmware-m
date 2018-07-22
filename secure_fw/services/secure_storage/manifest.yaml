@@ -34,6 +34,14 @@
       "minor_policy": "strict"
     },
     {
+      "sfid": "JWT_GET_ADDRESS_IOT_SFID",
+      "signal": "JWT_GET_ADDRESS",
+      "tfm_symbol": "sst_jwt_get_address",
+      "non_secure_clients": true,
+      "minor_version": 1,
+      "minor_policy": "strict"
+    },
+    {
       "sfid": "SST_AM_GET_INFO_SFID",
       "signal": "SST_AM_GET_INFO",
       "tfm_symbol": "sst_am_get_info",

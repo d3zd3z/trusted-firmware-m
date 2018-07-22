@@ -405,6 +405,15 @@ static const unsigned char simple_private_der[] = {
 };
 unsigned const int simple_private_der_len = 32;
 
+enum psa_sst_err_t sst_jwt_get_address(uint32_t app_id, uint32_t asset_uuid,
+                               const struct tfm_sst_token_t *s_token,
+                               const unsigned char **address)
+{
+	printf("Storing %p in %p\n", simple_private_der, address);
+	*address = simple_private_der;
+	return PSA_SST_ERR_SUCCESS;
+}
+
 enum psa_sst_err_t sst_jwt_sign(uint32_t app_id, uint32_t asset_uuid,
                                 const struct tfm_sst_token_t *s_token,
                                struct tfm_sst_jwt_t *data)
