@@ -7,6 +7,7 @@
 #include <string.h>
 //#include <zephyr/types.h>
 #include <errno.h>
+#include <stdio.h>
 
 #include "jwt.h"
 #include "json.h"
@@ -230,37 +231,42 @@ int jwt_sign(struct jwt_builder *builder,
 
 #ifdef CONFIG_JWT_SIGN_ECDSA
 static TCCtrPrng_t prng_state;
-static bool prng_init;
 
 static uint8_t personalize[] = "zephyr:drivers/jwt/jwt.c";
 
-static unsigned long int next = 1;
-
-/* Return next random integer */
-
-static int _rand(void)
-
+/*
+ * Fake-ish deterministic ECDSA.
+ *
+ * This is derived from the construct djb uses in ED25519, where we
+ * derive the nonce from private key and the message.  The private key
+ * is fixed size, so there shouldn't be a worry about forging.
+ */
+static int setup_prng(const uint8_t *key, size_t key_len,
+		      const uint8_t *message, size_t message_len)
 {
-
-    next = next * 1103515245L + 12345;
-
-    return (unsigned int) (next / 65536L) % 32768L;
-
-}
-
-static int setup_prng(void)
-{
-	if (prng_init) {
-		return 0;
-	}
-	prng_init = true;
+	struct tc_sha256_state_struct hash;
 
 	uint8_t entropy[TC_AES_KEY_SIZE + TC_AES_BLOCK_SIZE];
 
+	if (sizeof(entropy) < 32) {
+		printf("Entropy is too large\n");
+		while (1) {
+		}
+	}
+
+	memset(entropy, 0xAA, sizeof(entropy));
+
+	tc_sha256_init(&hash);
+	tc_sha256_update(&hash, key, key_len);
+	tc_sha256_update(&hash, message, message_len);
+	tc_sha256_final(entropy, &hash);
+
+#if 0
 	for (int i = 0; i < sizeof(entropy); i += sizeof(uint32_t)) {
 		uint32_t rv = _rand();//zss for debug sys_rand32_get();
 		memcpy(entropy + i, &rv, sizeof(uint32_t));
 	}
+#endif
 
 	// pdump(entropy, sizeof(entropy));
 	int res = tc_ctr_prng_init(&prng_state,
@@ -291,7 +297,9 @@ int jwt_sign(struct jwt_builder *builder,
 	tc_sha256_update(&ctx, (uint8_t *)builder->base, builder->buf - builder->base);
 	tc_sha256_final(hash, &ctx);
 
-	int res = setup_prng();
+	int res = setup_prng((const uint8_t *)der_key, 32,
+			     (const uint8_t *)builder->base,
+			     builder->buf - builder->base);
 	if (res != 0) {
 		return res;
 	}
