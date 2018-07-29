@@ -23,7 +23,7 @@ set(AUDIT_LOGGING_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 #Check input variables
 if (NOT DEFINED ENABLE_AUDIT_LOGGING)
-	message(FATAL_ERROR "Incomplete build configuration: ENABLE_AUDIT_LOGGING is undefined. ")
+#	message(FATAL_ERROR "Incomplete build configuration: ENABLE_AUDIT_LOGGING is undefined. ")
 endif()
 
 if (ENABLE_AUDIT_LOGGING)
@@ -50,5 +50,5 @@ if (ENABLE_AUDIT_LOGGING)
 	embedded_include_directories(PATH ${TFM_ROOT_DIR}/platform/ext/common ABSOLUTE)
 
 else()
-	message(FATAL_ERROR "Build system currently doesn't support selectively disabling of a service.")
+#	message(FATAL_ERROR "Build system currently doesn't support selectively disabling of a service.")
 endif()

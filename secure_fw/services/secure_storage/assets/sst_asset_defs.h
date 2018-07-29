@@ -56,7 +56,8 @@ extern "C" {
 /* Maximum number of assets that can be stored in the cache */
 #define SST_NUM_ASSETS 10
 /* Largest defined asset size */
-#define SST_MAX_ASSET_SIZE 2048
+#define SST_MAX_ASSET_SIZE 1024
+//2048
 
 #ifdef __cplusplus
 }
