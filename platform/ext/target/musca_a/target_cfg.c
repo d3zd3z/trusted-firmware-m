@@ -138,9 +138,9 @@ void mpc_init_cfg(void)
                                    ARM_MPC_ATTR_SECURE);
 
     mpc_data_region1->Initialize();
-    mpc_data_region1->ConfigRegion(MPC_ISRAM1_RANGE_BASE_S,
-                                   MPC_ISRAM1_RANGE_LIMIT_S,
-                                   ARM_MPC_ATTR_SECURE);
+    mpc_data_region1->ConfigRegion(MPC_ISRAM1_RANGE_BASE_NS,
+                                   MPC_ISRAM1_RANGE_LIMIT_NS,
+                                   ARM_MPC_ATTR_NONSECURE);
 
     mpc_data_region2->Initialize();
     mpc_data_region2->ConfigRegion(MPC_ISRAM2_RANGE_BASE_NS,
