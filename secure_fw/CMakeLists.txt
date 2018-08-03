@@ -153,5 +153,12 @@ install(DIRECTORY ${TFM_ROOT_DIR}/interface/src/
 install(FILES ${S_VENEER_FILE}
 		DESTINATION tfm/veneers)
 
+add_custom_command(TARGET ${PROJECT_NAME}
+					POST_BUILD
+
+					#Output memory usage in TFM
+					COMMAND ${PYTHON_EXECUTABLE} ${TFM_ROOT_DIR}/tools/memory_usage.py
+					ARGS -i ${CMAKE_BINARY_DIR}/app/secure_fw/${PROJECT_NAME}.map
+)
 #Finally let cmake system apply changes after the whole project is defined.
 embedded_project_end(${PROJECT_NAME})
