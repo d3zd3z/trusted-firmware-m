@@ -414,6 +414,27 @@ enum psa_sst_err_t sst_jwt_get_address(uint32_t app_id, uint32_t asset_uuid,
 	return PSA_SST_ERR_SUCCESS;
 }
 
+static char test_buffer[640];
+
+static struct tfm_sst_jwt_t local_jwt_cmd = {
+	.buffer = test_buffer,
+	.buffer_size = sizeof(test_buffer),
+	.iat = 1532120018,
+	.exp = 1532120018 + 60 * 60,
+	.aud = "local-string",
+	.aud_len = /* strlen("local-string") */ 12,
+};
+
+/* Create a simple token request on the secure side to make sure that
+ * this is actually validated. */
+enum psa_sst_err_t sst_jwt_get_token_addr(uint32_t app_id, uint32_t asset_uuid,
+					  const struct tfm_sst_token_t *s_token,
+					  const struct tfm_sst_jwt_t **data)
+{
+	*data = &local_jwt_cmd;
+	return PSA_SST_ERR_SUCCESS;
+}
+
 enum psa_sst_err_t sst_jwt_sign(uint32_t app_id, uint32_t asset_uuid,
                                 const struct tfm_sst_token_t *s_token,
                                struct tfm_sst_jwt_t *data)

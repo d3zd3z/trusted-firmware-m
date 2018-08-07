@@ -14,6 +14,7 @@
     {sst_am_create, SST_AM_CREATE_SFID},
     {sst_jwt_sign, JWT_SIGN_IOT_SFID},
     {sst_jwt_get_address, JWT_GET_ADDRESS_IOT_SFID},
+    {sst_jwt_get_token_addr, JWT_GET_TOKEN_ADDR_IOT_SFID},
 
     {sst_am_get_info, SST_AM_GET_INFO_SFID},
     {sst_am_get_attributes, SST_AM_GET_ATTRIBUTES_SFID},
